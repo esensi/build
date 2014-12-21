@@ -13,8 +13,9 @@ This is the Esensi gulp-based build process. It's useful for Esensi projects and
 1. _Make sure your project has a `package.json`._ If it doesn't, you can use `npm init` to help you make one.
 2. _Add `gulp` to your project's `package.json`._ Try `npm install --save gulp@v3.8.10`.
 3. _Add `esensi/build` to your `package.json`._ Try `npm install --save git+https://github.com/esensi/build.git@v0.4.0`.
-4. _Add a Gulpfile.js to your project._ There's a sample Gulpfile.js called `Gulpfile-sample.js` included that you can use to get started.
-5. _Provide a configuration file._ By default, the sample Gulpfile looks for the config file in `./app/assets/build.json`, this is the default location for Esensi projects. If you need to change this, adjust your Gulpfile accordingly. We've included `build-sample.json` if you need to add a new config file for your project.
+4. _Add `browserify-shim` to your `package.json`._ Try `npm install --save browserify-shim@v3.8.1`.
+5. _Add a Gulpfile.js to your project._ There's a sample Gulpfile.js called `Gulpfile-sample.js` included that you can use to get started.
+6. _Provide a configuration file._ By default, the sample Gulpfile looks for the config file in `./app/assets/build.json`, this is the default location for Esensi projects. If you need to change this, adjust your Gulpfile accordingly. We've included `build-sample.json` if you need to add a new config file for your project.
 
 ## Available Tasks
 
@@ -65,3 +66,9 @@ _To add a new task to your project and **not** to this package_, append it to yo
 npm >=2.0.0 supports sourcing packages from local paths! This makes testing this package easy -- just use `npm install --save file:path/to/this/directory`.
 
 Seeing `Task 'default' is not in your gulpfile` errors / requiring esensi/build in your project but can't see the tasks? Make sure _this package_ (esensi/build) doesn't have `gulp` in its dependencies! Only the parent project should have `gulp` as a dependency.
+
+## TODOs
+
+- Figure out why `browserify-shim` is required at the parent project level, and remove it.
+- Get watchify working.
+- Make this README nicer.
