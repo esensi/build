@@ -1,0 +1,24 @@
+{
+    "scripts": {
+        "source": "./app/assets/scripts/*.js",
+        "dest"  : "./public/builds/scripts/"
+    },
+    "styles": {
+        "source": "./app/assets/styles/*.less",
+        "dest": "./public/builds/styles/"
+    },
+    "fonts": {
+        "source": [
+            "./app/assets/fonts/**/*",
+            "./node_modules/font-awesome/fonts/**/*",
+            "./node_modules/bootstrap/dist/fonts/**/*",
+            "./node_modules/open-sans/fonts/**/*"
+        ],
+        "dest": "./public/builds/fonts/"
+    },
+    "images": {
+        "source": "./app/assets/images/**/*",
+        "dest": "./public/builds/images/"
+    },
+    "vendor": "./node_modules/"
+}
