@@ -1,5 +1,5 @@
 {
-  "name": "@esensi/build",
+  "name": "esensi/build",
   "version": "0.4.0",
   "description": "The gulp.js components that integrate the build tasks into Esensi",
   "main": "index.js",
