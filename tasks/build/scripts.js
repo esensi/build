@@ -56,7 +56,7 @@ gulp.task('build:scripts', ['clean:scripts'], function() {
         .pipe(gulpif(!global.is_production, sourcemaps.write('.'))) // Write maps externally to same directory
 
         // Save original
-        .pipe(gulpif(!config.revisions), gulp.dest(dest));
+        .pipe(gulpif(!config.revisions, gulp.dest(dest)))
 
         // Build revisions
         .pipe(gulpif(config.revisions, rev()))

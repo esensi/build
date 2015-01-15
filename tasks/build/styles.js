@@ -40,7 +40,7 @@ gulp.task("build:styles", ['clean:styles'], function () {
         .pipe(gulpif(!global.is_production, sourcemaps.write('.')))
 
         // Save original
-        .pipe(gulpif(!config.revisions), gulp.dest(config.styles.dest));
+        .pipe(gulpif(!config.revisions, gulp.dest(config.styles.dest)))
 
         // Build revisions
         .pipe(gulpif(config.revisions, rev()))
