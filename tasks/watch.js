@@ -36,28 +36,28 @@ var config  = global.configOpts;
 gulp.task('watch', ['build:watch']);
 gulp.task('watch', function() {
 
-    // Fonts
-    gulp.start('clean:fonts', 'build:fonts');
-    watch(config.fonts.source, {'name': 'fonts'}, function () {
-        gulp.start('clean:fonts', 'build:fonts');
-    });
-
-    // Images
-    gulp.start('clean:images', 'build:images');
-    watch(config.images.source, {'name': 'images'}, function () {
-        gulp.start('clean:images', 'build:images');
-    });
-
     // Scripts
     gulp.start('clean:scripts', 'build:scripts');
-    watch(config.scripts.source, {'name': 'scripts'}, function () {
+    watch(config.scripts.watch, {'name': 'scripts'}, function () {
         gulp.start('clean:scripts', 'build:scripts');
     });
 
     // Styles
     gulp.start('clean:styles', 'build:styles');
-    watch(config.styles.source, {'name': 'styles'}, function () {
+    watch(config.styles.watch, {'name': 'styles'}, function () {
         gulp.start('clean:styles', 'build:styles');
+    });
+
+    // Images
+    gulp.start('clean:images', 'build:images');
+    watch(config.images.watch, {'name': 'images'}, function () {
+        gulp.start('clean:images', 'build:images');
+    });
+
+    // Fonts
+    gulp.start('clean:fonts', 'build:fonts');
+    watch(config.fonts.watch, {'name': 'fonts'}, function () {
+        gulp.start('clean:fonts', 'build:fonts');
     });
 
 });

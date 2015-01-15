@@ -1,10 +1,12 @@
 {
     "scripts": {
         "source": "./app/assets/scripts/*.js",
+        "watch" : "./app/assets/scripts/**/*.js",
         "dest"  : "./public/builds/scripts/"
     },
     "styles": {
         "source": "./app/assets/styles/*.less",
+        "watch" : "./app/assets/styles/**/*.less",
         "dest": "./public/builds/styles/"
     },
     "fonts": {
@@ -14,10 +16,12 @@
             "./node_modules/bootstrap/dist/fonts/**/*",
             "./node_modules/open-sans/fonts/**/*"
         ],
+        "watch": "./app/assets/fonts/**/*",
         "dest": "./public/builds/fonts/"
     },
     "images": {
         "source": "./app/assets/images/**/*",
+        "watch": "./app/assets/images/**/*",
         "dest": "./public/builds/images/"
     },
     "vendor": "./node_modules/",
