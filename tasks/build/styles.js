@@ -39,12 +39,15 @@ gulp.task("build:styles", ['clean:styles'], function () {
         // same directory. Default is internal write.)
         .pipe(gulpif(!global.is_production, sourcemaps.write('.')))
 
+        // Save original
+        .pipe(gulpif(!config.revisions), gulp.dest(config.styles.dest));
+
         // Build revisions
-        .pipe(rev())
-        .pipe(gulp.dest(config.styles.dest)) // write rev'd assets to build dir
+        .pipe(gulpif(config.revisions, rev()))
+        .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))) // write rev'd assets to build dir
 
         // Build revisions manifest
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(config.styles.dest)); // write manifest to build dir
+        .pipe(gulpif(config.revisions, rev.manifest()))
+        .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))); // write manifest to build dir
 
 });

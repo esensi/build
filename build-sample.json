@@ -20,5 +20,6 @@
         "source": "./app/assets/images/**/*",
         "dest": "./public/builds/images/"
     },
-    "vendor": "./node_modules/"
+    "vendor": "./node_modules/",
+    "revisions": true
 }

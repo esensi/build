@@ -55,12 +55,15 @@ gulp.task('build:scripts', ['clean:scripts'], function() {
         .pipe(gulpif(global.is_production, uglify())) // Uglify if production
         .pipe(gulpif(!global.is_production, sourcemaps.write('.'))) // Write maps externally to same directory
 
+        // Save original
+        .pipe(gulpif(!config.revisions), gulp.dest(dest));
+
         // Build revisions
-        .pipe(rev())
-        .pipe(gulp.dest(dest))
+        .pipe(gulpif(config.revisions, rev()))
+        .pipe(gulpif(config.revisions, gulp.dest(dest))) // write rev'd assets to build dir
 
         // Build revisions manifest
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(dest));
+        .pipe(gulpif(config.revisions, rev.manifest()))
+        .pipe(gulpif(config.revisions, gulp.dest(dest))); // write manifest to build dir
 
 });
