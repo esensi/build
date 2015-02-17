@@ -1,0 +1,29 @@
+{
+    "scripts": {
+        "source": "./resources/scripts/*.js",
+        "watch" : "./resources/scripts/**/*.js",
+        "dest"  : "./public/js/"
+    },
+    "styles": {
+        "source": "./resources/styles/*.less",
+        "watch" : "./resources/styles/**/*.less",
+        "dest": "./public/css/"
+    },
+    "fonts": {
+        "source": [
+            "./resources/fonts/**/*",
+            "./node_modules/font-awesome/fonts/**/*",
+            "./node_modules/bootstrap/dist/fonts/**/*",
+            "./node_modules/open-sans/fonts/**/*"
+        ],
+        "watch": "./resources/fonts/**/*",
+        "dest": "./public/fonts/"
+    },
+    "images": {
+        "source": "./resources/images/**/*",
+        "watch": "./resources/images/**/*",
+        "dest": "./public/img/"
+    },
+    "vendor": "./node_modules/",
+    "revisions": true
+}
