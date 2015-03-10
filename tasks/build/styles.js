@@ -31,6 +31,10 @@ gulp.task("build:styles", ['clean:styles'], function () {
 
         // Compile LESS, compress if in production.
         .pipe(less({ compress: global.is_production }))
+        // Handle any LESS errors. (This is hacky and one-off. We have a lot of
+        // issues with LESS errors being uncaught. Hopefully gulp 4 will bring
+        // comprehensive error handling and we can remove all this nonsense.)
+        .on('error', function(err){ console.log(err.message); })
 
         // Run autoprefixer. (Don't pass any options b/c the defaults are fine.)
         .pipe(autoprefixer())
