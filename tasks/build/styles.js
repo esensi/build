@@ -51,7 +51,7 @@ gulp.task("build:styles", ['clean:styles'], function () {
         .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))) // write rev'd assets to build dir
 
         // Build revisions manifest
-        .pipe(gulpif(config.revisions, rev.manifest()))
+        .pipe(gulpif(config.revisions, rev.manifest('manifest.json')))
         .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))); // write manifest to build dir
 
 });

@@ -64,7 +64,7 @@ gulp.task('build:scripts', ['clean:scripts'], function() {
             .pipe(gulpif(config.revisions, gulp.dest(dest))) // write rev'd assets to build dir
 
             // Build revisions manifest
-            .pipe(gulpif(config.revisions, rev.manifest()))
+            .pipe(gulpif(config.revisions, rev.manifest( name.replace('.js', '.json') )))
             .pipe(gulpif(config.revisions, gulp.dest(dest))); // write manifest to build dir
         });
     });
