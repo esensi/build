@@ -36,8 +36,8 @@ gulp.task("build:styles", ['clean:styles'], function () {
         // comprehensive error handling and we can remove all this nonsense.)
         .on('error', function(err){ console.log(err.message); })
 
-        // Run autoprefixer. (Don't pass any options b/c the defaults are fine.)
-        .pipe(autoprefixer())
+        // Run autoprefixer. (Set browsers to target in the config file!)
+        .pipe(autoprefixer(config.autoprefixerOpts))
 
         // If not production, use sourcemaps. ('.' writes maps externally to
         // same directory. Default is internal write.)
