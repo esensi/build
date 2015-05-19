@@ -1,8 +1,8 @@
 ## Esensi Build Tasks Package
 
-[![Total Downloads](https://poser.pugx.org/esensi/build/downloads.svg)](https://packagist.org/packages/esensi/build)
-[![Latest Stable Version](https://poser.pugx.org/esensi/build/v/stable.svg)](https://github.com/esensi/build/releases)
-[![License](https://poser.pugx.org/esensi/build/license.svg)](https://github.com/esensi/build#licensing)
+![Total Downloads](https://img.shields.io/github/downloads/esensi/build/latest/total.svg?style=flat-square)
+![Latest Stable Version](https://img.shields.io/github/release/esensi/build.svg?style=flat-square)](https://github.com/esensi/build/releases)
+[![License](https://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://github.com/esensi/build#licensing)
 
 An [Esensi](https://github.com/esensi) package, coded by [Emerson Media](http://www.emersonmedia.com).
 
