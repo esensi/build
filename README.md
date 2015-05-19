@@ -2,7 +2,7 @@
 
 [![Total Downloads](https://img.shields.io/github/downloads/esensi/build/latest/total.svg?style=flat-square)](https://github.com/esensi/build/releases)
 [![Latest Stable Version](https://img.shields.io/github/release/esensi/build.svg?style=flat-square)](https://github.com/esensi/build/releases)
-[![License](https://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://github.com/esensi/build#licensing)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/esensi/build#licensing)
 
 An [Esensi](https://github.com/esensi) package, coded by [Emerson Media](http://www.emersonmedia.com).
 
