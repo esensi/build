@@ -43,13 +43,11 @@ gulp.task('deploy', function()
         tasks.push('deploy:' + environment);
     }
 
+    // Now run the tasks in sequence
     // Add the callback that resets the production state when we're done
-    tasks.push(function(){
+    sequence(tasks, function() {
         global.is_production = original;
     });
-
-    // Now run the tasks in sequence
-    sequence(tasks);
 });
 
 // Create gulp deploy subtasks for each environment.
@@ -62,7 +60,7 @@ for(var environment in connections)
             args: ['--verbose'],
             ssh: true,
             src: deploy.source,
-            dest: connections[connection],
+            dest: connections[environment],
             port: deploy.port,
             recursive: true,
             syncDest: false,
