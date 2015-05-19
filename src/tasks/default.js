@@ -1,7 +1,13 @@
 /* jshint node: true */
 
 /**
- * Gulp Tasks
+ * Gulp Default Task
+ *
+ * Provides a default task to a Gulpfile.
+ * This just prints a task list as help information.
+ *
+ * @example
+ *     gulp
  *
  * @package Esensi\Build
  * @author daniel <daniel@emersonmedia.com>
@@ -13,6 +19,8 @@
 
 "use strict";
 
-// Customize the path below to the location of the build.json file
-global.buildOptions = require('./build.json');
-require('esensi-build');
+var gulp  = require('gulp');
+var tasks = require('gulp-task-listing');
+
+// Run task lister as default task
+gulp.task('default', tasks);

@@ -1,7 +1,7 @@
 /* jshint node: true */
 
 /**
- * Gulp Tasks
+ * Filters file glob for .js and .coffee files.
  *
  * @package Esensi\Build
  * @author daniel <daniel@emersonmedia.com>
@@ -13,6 +13,9 @@
 
 "use strict";
 
-// Customize the path below to the location of the build.json file
-global.buildOptions = require('./build.json');
-require('esensi-build');
+var path = require('path');
+
+module.exports = function(name)
+{
+    return /(\.(js|coffee)$)/i.test(path.extname(name));
+};

@@ -2,7 +2,15 @@
     "scripts": {
         "source": "./resources/scripts/*.js",
         "watch" : "./resources/scripts/**/*.js",
-        "dest"  : "./public/js/"
+        "dest"  : "./public/js/",
+        "lint"  : [
+            "./Gulpfile.js",
+            "./.jshintrc",
+            "./composer.json",
+            "./package.json",
+            "./resources/scripts/**/*.js",
+            "!./resources/scripts/common/google-analytics.js"
+        ]
     },
     "styles": {
         "source": "./resources/styles/*.less",
@@ -24,12 +32,31 @@
         "watch": "./resources/images/**/*",
         "dest": "./public/img/"
     },
+    "deployment": {
+        "source": ["./public"],
+        "port": 22,
+        "connections": {
+            "production": "username@example.com:/home/username/path"
+        }
+    },
     "autoprefixerOpts": {
         "browsers": [
             "> 1%",
-            "last 2 versions",
+            "Android >= 4",
+            "Blackberry >= 7",
+            "last 5 Chrome versions",
+            "last 4 ChromeAndroid versions",
+            "Firefox >= 24",
             "Firefox ESR",
-            "Opera 12.1"
+            "last 4 FirefoxAndroid versions",
+            "Explorer >= 8",
+            "last 4 ExplorerMobile versions",
+            "iOS >= 5.1",
+            "Opera 12.1",
+            "Opera <= 28",
+            "last 4 OperaMini versions",
+            "last 4 OperaMobile versions",
+            "Safari >=  5"
         ]
     },
     "vendor": "./node_modules/",

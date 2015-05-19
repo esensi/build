@@ -1,7 +1,12 @@
 /* jshint node: true */
 
 /**
- * Gulp Tasks
+ * Gulp Build Task
+ *
+ * This simply runs all the build subtasks.
+ *
+ * @example
+ *     gulp build
  *
  * @package Esensi\Build
  * @author daniel <daniel@emersonmedia.com>
@@ -13,6 +18,12 @@
 
 "use strict";
 
-// Customize the path below to the location of the build.json file
-global.buildOptions = require('./build.json');
-require('esensi-build');
+var gulp = require('gulp');
+
+// Run all build subtasks
+gulp.task( 'build', [
+    'build:fonts',
+    'build:images',
+    'build:scripts',
+    'build:styles'
+]);
