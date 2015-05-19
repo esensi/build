@@ -27,7 +27,7 @@ var config      = global.buildOptions;
 var deploy      = config.deployment;
 var connections = deploy.connections;
 
-// Run all deploy subtasks
+// Run all deploy subtasks with production optimizations
 gulp.task('deploy', function()
 {
     // Get the original production state to reset when we're done
