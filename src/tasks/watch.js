@@ -38,7 +38,7 @@
 var gulp     = require('gulp');
 var sequence = require('run-sequence');
 var watch    = require('gulp-watch');
-var config   = global.configOpts;
+var config   = global.buildOptions;
 
 // Alias build:watch to watch
 gulp.task('build:watch', ['watch']);
