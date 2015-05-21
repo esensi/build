@@ -4,12 +4,12 @@
         "watch" : "./resources/scripts/**/*.js",
         "dest"  : "./public/js/",
         "lint"  : [
-            "./Gulpfile.js",
+            "./gulpfile.js",
             "./.jshintrc",
             "./composer.json",
             "./package.json",
             "./resources/scripts/**/*.js",
-            "!./resources/scripts/common/google-analytics.js"
+            "!./resources/scripts/common/_ga.js"
         ]
     },
     "styles": {
