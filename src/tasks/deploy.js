@@ -21,7 +21,7 @@
 
 var gulp        = require('gulp');
 var gutil       = require('gulp-util');
-var rsync       = require('rsyncwrapper').rsync;
+var rsync       = require('gulp-rsync');
 var sequence    = require('run-sequence');
 var config      = global.buildOptions;
 var deploy      = config.deployment;
@@ -56,17 +56,19 @@ for(var environment in connections)
 {
     gulp.task('deploy:' + environment, function()
     {
-        rsync({
-            args: ['--verbose'],
-            ssh: true,
-            src: deploy.source,
-            dest: connections[environment],
-            port: deploy.port,
+        var connection = connections[environment];
+        var rsyncOptions = {
+            destination: connection.dest,
+            hostname: connection.hostname,
+            username: connection.username,
+            incremental: true,
+            progress: true,
+            relative: true,
+            emptyDirectories: true,
             recursive: true,
-            syncDest: false,
-            compareMode: 'checksum',
-        }, function(error, stdout, stderr, cmd) {
-            gutil.log(stdout);
-        });
+            clean: false
+        };
+        return gulp.src(deploy.source)
+            .pipe(rsync(rsyncOptions));
     });
 }

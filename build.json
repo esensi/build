@@ -15,7 +15,7 @@
     "styles": {
         "source": "./resources/styles/*.less",
         "watch" : "./resources/styles/**/*.less",
-        "dest": "./public/css/"
+        "dest"  : "./public/css/"
     },
     "fonts": {
         "source": [
@@ -25,18 +25,21 @@
             "./node_modules/open-sans/fonts/**/*"
         ],
         "watch": "./resources/fonts/**/*",
-        "dest": "./public/fonts/"
+        "dest" : "./public/fonts/"
     },
     "images": {
         "source": "./resources/images/**/*",
-        "watch": "./resources/images/**/*",
-        "dest": "./public/img/"
+        "watch" : "./resources/images/**/*",
+        "dest"  : "./public/img/"
     },
     "deployment": {
-        "source": ["./public"],
-        "port": 22,
+        "source": ["./*"],
         "connections": {
-            "production": "username@example.com:/home/username/path"
+            "production": {
+                "username": "username",
+                "hostname": "example.com",
+                "dest"    : "/home/username/public"
+            }
         }
     },
     "autoprefixerOpts": {
