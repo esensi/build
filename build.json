@@ -42,6 +42,10 @@
             }
         }
     },
+    "workbench": {
+        "watch": ["./public/**/*"],
+        "init": ["watch"]
+    },
     "autoprefixerOpts": {
         "browsers": [
             "> 1%",

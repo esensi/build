@@ -15,4 +15,6 @@
 
 // Customize the path below to the location of the build.json file
 global.buildOptions = require('./build.json');
-require('esensi-build');
+
+// Require esensi-build tasks: and for testing purposes fallback to index
+try{ require('esensi-build'); } catch(e) { require('./index'); }
