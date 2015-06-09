@@ -32,12 +32,25 @@ gulp.task('jekyll', [
 ]);
 
 // Build jekyll templates.
-// Runs build of other assets first.
-gulp.task('jekyll:build', ['build'], function(callback)
+gulp.task('jekyll:build', function(callback)
 {
     // Run `jekyll build` in a child process
     // Uses the `--lsi` flag to improve related blog posts
     process.exec('jekyll build --lsi', function(err, stdout, stderr)
+    {
+        gutil.log(stdout);
+        callback(err);
+    });
+});
+
+// Alias jekyll:serve to jekyll:watch
+gulp.task('jekyll:serve', ['jekyll:watch']);
+
+// Serve jekyll templates.
+gulp.task('jekyll:watch', function() {
+
+    // Run `jekyll serve --watch` in a child process
+    process.exec('jekyll serve --watch', function(err, stdout, stderr)
     {
         gutil.log(stdout);
         callback(err);
