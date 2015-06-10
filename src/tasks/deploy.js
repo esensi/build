@@ -54,21 +54,25 @@ gulp.task('deploy', function()
 // Uses rsync to deploy source files to remote server via SSH.
 for(var environment in connections)
 {
-    gulp.task('deploy:' + environment, function()
+    (function(environment)
     {
-        var connection = connections[environment];
-        var rsyncOptions = {
-            destination: connection.dest,
-            hostname: connection.hostname,
-            username: connection.username,
-            incremental: true,
-            progress: true,
-            relative: true,
-            emptyDirectories: true,
-            recursive: true,
-            clean: false
-        };
-        return gulp.src(deploy.source)
-            .pipe(rsync(rsyncOptions));
-    });
+        gulp.task('deploy:' + environment, function()
+        {
+            var connection = connections[environment];
+            var rsyncOptions = {
+                destination: connection.dest,
+                hostname: connection.hostname,
+                username: connection.username,
+                incremental: true,
+                progress: true,
+                relative: true,
+                emptyDirectories: true,
+                recursive: true,
+                clean: false
+            };
+            return gulp.src(deploy.source)
+                .pipe(rsync(rsyncOptions));
+        });
+
+    })(environment);
 }
