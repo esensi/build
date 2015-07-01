@@ -6,7 +6,7 @@
  * @package Esensi\Build
  * @author daniel <daniel@emersonmedia.com>
  * @author matt <matt@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/build/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */
@@ -15,6 +15,9 @@
 
 // Customize the path below to the location of the build.json file
 global.buildOptions = require('./build.json');
+
+// Customize the path below to the location of the aws-credentials.json file
+global.awsCredentials = require('./aws-credentials.json');
 
 // Require esensi-build tasks: and for testing purposes fallback to index
 try{ require('esensi-build'); } catch(e) { require('./index'); }
