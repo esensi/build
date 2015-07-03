@@ -130,4 +130,4 @@ Add new tasks directly to this `esensi/build` package by creating a new task fil
 
 Copyright (c) 2015 [Emerson Media, LP](https://www.emersonmedia.com)
 
-This package is released under the MIT license. Please see the [LICENSE.txt](https://github.com/esensi/model/blob/master/LICENSE.txt) file distributed with every copy of the code for commercial licensing terms.
+This package is released under the MIT license. Please see the [LICENSE.txt](https://github.com/esensi/build/blob/master/LICENSE.txt) file distributed with every copy of the code for commercial licensing terms.
