@@ -4,9 +4,9 @@
  * Filters file glob for .css, .less, and .scss files.
  *
  * @package Esensi\Build
- * @author daniel <daniel@emersonmedia.com>
- * @author matt <matt@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @author Matt Malinowski <matt@emersonmedia.com>
+ * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/build/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
  */

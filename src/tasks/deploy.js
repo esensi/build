@@ -10,8 +10,8 @@
  *     gulp deploy:<environment>
  *
  * @package Esensi\Build
- * @author daniel <daniel@emersonmedia.com>
- * @author matt <matt@emersonmedia.com>
+ * @author Daniel LaBarge <daniel@emersonmedia.com>
+ * @author Matt Malinowski <matt@emersonmedia.com>
  * @copyright 2015 Emerson Media LP
  * @license https://github.com/esensi/build/blob/master/LICENSE.txt MIT License
  * @link http://www.emersonmedia.com
