@@ -1,3 +1,4 @@
+.awspublish-*
 .DS_Store
 .sublime-gulp.cache
 /.idea
