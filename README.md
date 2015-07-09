@@ -134,11 +134,11 @@ In order to deploy to an S3 bucket, you need to:
         }
 
 4. Add your AWS key and secret to `aws-credentials.json`. (Make sure this file is in `.gitignore`!)
-5. Add your bucket and region to `build.json` like this:
+5. Add your bucket and region to `build.json`, and make sure your source is configured properly. (Note that S3 deployment _does not_ work with multi-value arrays. Also note that to deploy entire directories, your `source` needs to end with `/**`.) For example:
 
         {
             "deployment": {
-                "source": ["./*"],
+                "source": ["./**"],
                 "connections": {
                     "s3-example": {
                         "type": "s3",

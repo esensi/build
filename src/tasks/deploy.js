@@ -94,6 +94,32 @@ var deployToS3 = function(connection){
         'Cache-Control': 'max-age=315360000, no-transform, public'
     };
 
+    // gulp-awspublish only works with a single source, unlike rsync.
+    // So, if deploy.source isn't a string...
+    if (typeof deploy.source !== "string" || deploy.source instanceof String) {
+        // ... and it's length 1, convert to array ...
+        if (deploy.source.length === 1) {
+            deploy.source = deploy.source[0];
+        }
+        // ... otherwise error out.
+        else {
+            gutil.log(
+                gutil.colors.bgRed("Error!"),
+                "deploy.source is an array and S3 deployment doesn't support arrays. Make deploy.source a single-value array or string and try again!"
+            );
+            return false;
+        }
+    }
+
+    // gulp-awspublish also won't work with a source like `./public`, it wants
+    // `./public/**`. So, check for this, and display a message.
+    if( deploy.source.substring(0,2) === './' && deploy.source.substring(deploy.source.length-3) !== '/**' ) {
+        gutil.log(
+            gutil.colors.yellow("Heads up!"),
+            "You're trying to deploy '" + deploy.source + "'. If you're trying to deploy an entire directory to S3, you need to end your source with '/**'. (If you're not trying to deploy a directory, ignore this and carry on.)"
+        );
+    }
+
     return gulp.src(deploy.source)
         // Gzip and set Content-Encoding headers
         .pipe(awspublish.gzip())
