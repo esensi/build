@@ -113,25 +113,31 @@ In order to deploy to an S3 bucket, you need to:
 2. Create a user to interact with your new bucket, with an API key. Save the access key and secret.
 3. Set your new user's policy appropriately, such as this:
 
-        {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Allow",
-                    "Action": [
-                        "s3:PutObject",
-                        "s3:GetObject",
-                        "s3:DeleteObject",
-                        "s3:ListMultipartUploadParts",
-                        "s3:AbortMultipartUpload",
-                        "s3:ListBucket"
-                    ],
-                    "Resource": [
-                        "arn:aws:s3:::yourbucket"
-                    ]
-                }
-            ]
-        }
+    {
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "s3:ListBucket"
+                ],
+                "Resource": "arn:aws:s3:::yourbucket"
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "s3:AbortMultipartUpload",
+                    "s3:DeleteObject",
+                    "s3:GetObject",
+                    "s3:GetObjectAcl",
+                    "s3:ListMultipartUploadParts",
+                    "s3:PutObject",
+                    "s3:PutObjectAcl",
+                    "s3:RestoreObject"
+                ],
+                "Resource": "arn:aws:s3:::yourbucket/*"
+            }
+        ]
+    }
 
 4. Add your AWS key and secret to `aws-credentials.json`. (Make sure this file is in `.gitignore`!)
 5. Add your bucket and region to `build.json`, and make sure your source is configured properly. (Note that S3 deployment _does not_ work with multi-value arrays. Also note that to deploy entire directories, your `source` needs to end with `/**`.) For example:
