@@ -35,7 +35,13 @@
     "deployment": {
         "source": ["./*"],
         "connections": {
-            "production": {
+            "s3-example": {
+                "type": "s3",
+                "bucket": "XXXXXXXX",
+                "region": "us-standard"
+            },
+            "rsync-example": {
+                "type":     "rsync",
                 "username": "username",
                 "hostname": "example.com",
                 "dest"    : "/home/username/public"

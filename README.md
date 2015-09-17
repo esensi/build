@@ -11,7 +11,7 @@ Email us at [careers@emersonmedia.com](https://www.emersonmedia.com/contact)
 
 The `Esensi/Build` package is just one package that makes up [Esensi](https://github.com/esensi), a platform built on [Laravel](http://laravel.com). This package doesn't depend on Laravel (or use any PHP), and can be used with any project that needs frontend build tools.
 
-`Esensi/Build` uses [gulp](http://gulpjs.com/) tasks to pre-process CSS, JS, fonts and image assets into optimized builds that modern web projects need. The tasks will convert LESS into minified and concatenated CSS files, will bundle the JS assets with Browserify into minified and concatenated JS files, and will optimize builds of fonts and images for production-ready use. There are also tasks for working with Jekyll and deploying builds to remote servers. For more details on the inner workings of the tasks please consult the generously documented source code.
+`Esensi/Build` uses [gulp](http://gulpjs.com/) tasks to pre-process CSS, JS, fonts and image assets into optimized builds that modern web projects need. The tasks will convert LESS into minified and concatenated CSS files, will bundle the JS assets with Browserify into minified and concatenated JS files, and will optimize builds of fonts and images for production-ready use. There are also tasks for working with Jekyll and deploying builds to remote servers and S3. For more details on the inner workings of the tasks please consult the generously documented source code.
 
 > **Need help modernizing your frontend code and tools?**
 Email us at [sales@emersonmedia.com](https://www.emersonmedia.com/contact), or call 1.877.439.6665.
@@ -25,7 +25,10 @@ Getting started with Esensi/Build is simple. Make sure your project has a `packa
 2. Add `esensi/build` to your `package.json`: `npm install --save-dev esensi-build`
 3. Add `browserify-shim` to your `package.json`: `npm install --save-dev browserify-shim`
 4. Copy `gulpfile.js` and `build.json` to your project root.
-5. Customize `build.json` to fit your source and destination directory requirements.
+5. _Optional:_ If you're deploying to S3:
+    - Copy `aws-credentials.json` to your project root, and add your creds to it.
+    - Add `aws-credentials.json` and `.awspublish-*` to your project's `.gitignore`.
+6. Customize `build.json` to fit your source and destination directory requirements.
 
 
 ## Requirements
@@ -98,8 +101,60 @@ This package has been tested against the following `npm version` output:
 ### Deployment Tasks
 
 - `gulp deploy` - Runs all deploy subtasks listed below.
-- `gulp deploy:<environment>` - Uses `rsync` to deploy source files to the destination environment. The environments are defined in the `build.json` file.
-    - Example: `gulp deploy:production` would deploy to SSH connection defined by the `deployment.connections.production` key in `build.json`.
+- `gulp deploy:<environment>` - Uses `rsync` or `gulp-awspublish` to deploy source files to the destination environment. The environments are defined in the `build.json` file.
+    - rsync Example: `gulp deploy:rsync-example` would deploy to the SSH connection defined by the `deployment.connections.rsync-example` key in `build.json`.
+    - S3 Example: `gulp deploy:s3-example` would deploy to the S3 bucket defined by the `deployment.connections.s3-example` key in `build.json`. (For more information on S3 deployment, [see here](#deploying-to-s3).)
+
+## Deploying to S3
+
+In order to deploy to an S3 bucket, you need to:
+
+1. Create your bucket on S3. Note the region. Give it the proper permissions (i.e. anonymous user can read all) and turn on static website hosting if appropriate.
+2. Create a user to interact with your new bucket, with an API key. Save the access key and secret.
+3. Set your new user's policy appropriately, such as this:
+
+    {
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "s3:ListBucket"
+                ],
+                "Resource": "arn:aws:s3:::yourbucket"
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "s3:AbortMultipartUpload",
+                    "s3:DeleteObject",
+                    "s3:GetObject",
+                    "s3:GetObjectAcl",
+                    "s3:ListMultipartUploadParts",
+                    "s3:PutObject",
+                    "s3:PutObjectAcl",
+                    "s3:RestoreObject"
+                ],
+                "Resource": "arn:aws:s3:::yourbucket/*"
+            }
+        ]
+    }
+
+4. Add your AWS key and secret to `aws-credentials.json`. (Make sure this file is in `.gitignore`!)
+5. Add your bucket and region to `build.json`, and make sure your source is configured properly. (Note that S3 deployment _does not_ work with multi-value arrays. Also note that to deploy entire directories, your `source` needs to end with `/**`.) For example:
+
+        {
+            "deployment": {
+                "source": ["./**"],
+                "connections": {
+                    "s3-example": {
+                        "type": "s3",
+                        "bucket": "yourbucket",
+                        "region": "yourregion"
+                    }
+            }
+        }
+
+6. Run `gulp deploy:s3-example` to deploy.
 
 
 ## How This Package Works
