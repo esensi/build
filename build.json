@@ -1,9 +1,9 @@
 {
     "scripts": {
         "source": "./resources/scripts/*.js",
-        "watch" : "./resources/scripts/**/*.js",
-        "dest"  : "./public/js/",
-        "lint"  : [
+        "watch": "./resources/scripts/**/*.js",
+        "dest": "./public/js/",
+        "lint": [
             "./gulpfile.js",
             "./.jshintrc",
             "./composer.json",
@@ -13,9 +13,10 @@
         ]
     },
     "styles": {
-        "source": "./resources/styles/*.less",
-        "watch" : "./resources/styles/**/*.less",
-        "dest"  : "./public/css/"
+        "source": "./resources/styles/*.scss",
+        "watch": "./resources/styles/**/*.scss",
+        "dest": "./public/css/",
+        "compiler": "sass"
     },
     "fonts": {
         "source": [
@@ -25,12 +26,12 @@
             "./node_modules/open-sans/fonts/**/*"
         ],
         "watch": "./resources/fonts/**/*",
-        "dest" : "./public/fonts/"
+        "dest": "./public/fonts/"
     },
     "images": {
         "source": "./resources/images/**/*",
-        "watch" : "./resources/images/**/*",
-        "dest"  : "./public/img/"
+        "watch": "./resources/images/**/*",
+        "dest": "./public/img/"
     },
     "deployment": {
         "source": ["./*"],
@@ -44,7 +45,7 @@
                 "type":     "rsync",
                 "username": "username",
                 "hostname": "example.com",
-                "dest"    : "/home/username/public"
+                "dest": "/home/username/public"
             }
         }
     },
