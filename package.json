@@ -1,6 +1,6 @@
 {
   "name": "esensi-build",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The Gulp components that integrate build tasks into Esensi",
   "author": "Emerson Media LP",
   "license": "MIT",
