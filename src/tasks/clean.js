@@ -50,23 +50,23 @@ gulp.task('clean', [
 // Clean scripts subtask
 gulp.task('clean:scripts', function()
 {
-    return cleaner(config.scripts.dest + '*');
+    return cleaner(config.scripts.dest + '**/*');
 });
 
 // Clean styles subtask
 gulp.task("clean:styles", function()
 {
-    return cleaner(config.styles.dest + '*');
+    return cleaner(config.styles.dest + '**/*');
 });
 
 // Clean fonts subtask
 gulp.task("clean:fonts", function()
 {
-    return cleaner(config.fonts.dest + '*');
+    return cleaner(config.fonts.dest + '**/*');
 });
 
 // Clean images subtask
 gulp.task("clean:images", function()
 {
-    return cleaner(config.images.dest + '*');
+    return cleaner(config.images.dest + '**/*');
 });
