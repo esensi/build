@@ -67,13 +67,14 @@ gulp.task('build:scripts', ['clean:scripts'], function()
             .pipe(buffer())
             .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
             .pipe(gulpif(global.is_production, uglify())) // Minify in production
-            .pipe(gulpif(!global.is_production, sourcemaps.write('.'))) // Write maps externally to same directory
 
-            // Save original
+            // Build without revision
+            .pipe(gulpif(!global.is_production && !config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
             .pipe(gulpif(!config.revisions, gulp.dest(dest)))
 
-            // Build revisions
+            // Build with revisions
             .pipe(gulpif(config.revisions, rev()))
+            .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
             .pipe(gulpif(config.revisions, gulp.dest(dest))) // write assets to build dir
 
             // Build revisions manifest
