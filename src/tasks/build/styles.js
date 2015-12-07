@@ -60,16 +60,14 @@ gulp.task('build:styles', ['clean:styles'], function () {
         // Run autoprefixer: set browsers to target in the build.json file.
         .pipe(autoprefixer(config.autoprefixerOpts))
 
-        // In development, use sourcemaps. The '.' writes maps externally to
-        // same directory. Default is internal write.
-        .pipe(gulpif(!global.is_production, sourcemaps.write('.')))
-
-        // Save original
+        // Build without revisions
+        .pipe(gulpif(!config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
         .pipe(gulpif(!config.revisions, gulp.dest(config.styles.dest)))
 
-        // Build revisions
+        // Build with revisions
         .pipe(gulpif(config.revisions, rev()))
-        .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))) // write assets to build dir
+        .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
+        .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))) // Write the assets to the build dir
 
         // Build revisions manifest
         .pipe(gulpif(config.revisions, rev.manifest('manifest.json')))
