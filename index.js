@@ -1,39 +1,63 @@
-/* jshint node: true */
+// base for this file, taken from: http://julienrenaux.fr/2015/03/30/introduction-to-webpack-with-practical-examples/
+var path = require('path'),
+	ExtractTextPlugin = require("extract-text-webpack-plugin");
+ 
+var extractCSS = new ExtractTextPlugin('css/[name].css');
 
-/**
- * Main Package File
- *
- * This file simply autoloads all the defined Gulpfile tasks and utilities.
- *
- * @package Esensi\Build
- * @author daniel <daniel@emersonmedia.com>
- * @author matt <matt@emersonmedia.com>
- * @copyright 2014 Emerson Media LP
- * @license https://github.com/esensi/build/blob/master/LICENSE.txt MIT License
- * @link http://www.emersonmedia.com
- */
+// esensi/build
+module.exports = {
+    debug: true,
+    entry: {
+        public: './public',
+        admin: './admin'
+    },
+    output: {
+        path: path.join(__dirname, 'dist'),
+        publicPath: 'dist/',
+        filename: '[name].js'
+    },
+    module: {
+        loaders: [
+        	// babel loader (es6 to es5)
+			{
+				test: /\.es6$/,
+				loader: 'babel-loader',
+        		exclude: /node_modules/,
+				query: {
+					presets: ['es2015'],
+      				plugins: ['transform-runtime'] // had to use this plugin, otherwise was getting error with runtime (took from: https://github.com/babel/babel-loader#babel-is-injecting-helpers-into-each-file-and-bloating-my-code)
+				}
+			},
 
-"use strict";
+			// css loader
+			{
+				test: /\.css$/,
+				loader: extractCSS.extract(['css', 'autoprefixer'])
+				// loaders: ['style', 'css', 'autoprefixer']
+			},
 
-var argh = require('argh');
-var fs = require('fs');
-var wrench = require('wrench');
+			// sass loader
+			{
+				test: /\.scss$/,
+				loader: extractCSS.extract(['css', 'sass'])
+				// loaders: ['style', 'css', 'sass']
+			},
 
-/**
- * Command Line Options
- *
- * --production: Optimizes the build for production
- *
- * (Sets the is_production global if you use --production command line flag.)
- *
- */
-global.is_production = argh.argv.production;
+			// less loader
+			{
+  				test: /\.less$/,
+				loader: extractCSS.extract(['css', 'less'])
+				// loaders: ['style', 'css', 'less']
+			},
 
-// Autoload all of the tasks
-var onlyScripts = require(__dirname + '/src/filters/scripts');
-var directory = __dirname + '/src/tasks/';
-var tasks = wrench.readdirSyncRecursive(directory)
-    .filter(onlyScripts);
-tasks.forEach(function(task) {
-    require(directory + task);
-});
+			// images
+			{
+				test: /\.(png|jpg|gif)$/,
+				loader: "url-loader?limit=5000&name=img/img-[hash:6].[ext]"
+			}
+        ]
+    },
+    plugins: [
+        extractCSS
+    ]
+};
