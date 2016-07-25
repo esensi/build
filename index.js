@@ -35,5 +35,5 @@ var directory = __dirname + '/src/tasks/';
 var tasks = recursiveReadSync(directory)
     .filter(onlyScripts);
 tasks.forEach(function(task) {
-    require(directory + task);
+    require(task);
 });
