@@ -17,7 +17,7 @@
 
 var argh = require('argh');
 var fs = require('fs');
-var wrench = require('wrench');
+var recursiveReadSync = require('recursive-readdir-sync');
 
 /**
  * Command Line Options
@@ -32,7 +32,7 @@ global.is_production = argh.argv.production;
 // Autoload all of the tasks
 var onlyScripts = require(__dirname + '/src/filters/scripts');
 var directory = __dirname + '/src/tasks/';
-var tasks = wrench.readdirSyncRecursive(directory)
+var tasks = recursiveReadSync(directory)
     .filter(onlyScripts);
 tasks.forEach(function(task) {
     require(directory + task);
