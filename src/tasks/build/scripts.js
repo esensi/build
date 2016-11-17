@@ -29,6 +29,8 @@
 
 var gulp       = require('gulp');
 var browserify = require('browserify');
+var babelify   = require('babelify');
+var vueify     = require('vueify');
 var gulpif     = require('gulp-if');
 var rev        = require('gulp-rev');
 var sourcemaps = require('gulp-sourcemaps');
@@ -56,7 +58,9 @@ gulp.task('build:scripts', ['clean:scripts'], function()
                 insertGlobals: true,
                 detectGlobals: true,
                 noParse: false
-            }).bundle()
+            }).transform(vueify)
+            .transform(babelify)
+            .bundle()
             // adding an error handler, for when the pipe breaks
             // According to: http://www.bennadel.com/blog/2692-you-have-to-explicitly-end-streams-after-pipes-break-in-node-js.htm
             // the stream has to be ended, but it works without ending it
@@ -67,13 +71,14 @@ gulp.task('build:scripts', ['clean:scripts'], function()
             .pipe(buffer())
             .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
             .pipe(gulpif(global.is_production, uglify())) // Minify in production
-            .pipe(gulpif(!global.is_production, sourcemaps.write('.'))) // Write maps externally to same directory
 
-            // Save original
+            // Build without revision
+            .pipe(gulpif(!global.is_production && !config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
             .pipe(gulpif(!config.revisions, gulp.dest(dest)))
 
-            // Build revisions
+            // Build with revisions
             .pipe(gulpif(config.revisions, rev()))
+            .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
             .pipe(gulpif(config.revisions, gulp.dest(dest))) // write assets to build dir
 
             // Build revisions manifest
