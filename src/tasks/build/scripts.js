@@ -58,15 +58,18 @@ gulp.task('build:scripts', ['clean:scripts'], function()
                 insertGlobals: true,
                 detectGlobals: true,
                 noParse: false
-            }).transform(vueify)
+            })
+            .transform(vueify)
             .transform(babelify)
             .bundle()
-            // adding an error handler, for when the pipe breaks
+
+            // Adding an error handler, for when the pipe breaks
             // According to: http://www.bennadel.com/blog/2692-you-have-to-explicitly-end-streams-after-pipes-break-in-node-js.htm
             // the stream has to be ended, but it works without ending it
             .on('error', function (err) {
                 console.log(err.message);
             })
+            
             .pipe(stream(name))
             .pipe(buffer())
             .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
