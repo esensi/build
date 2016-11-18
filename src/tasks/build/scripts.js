@@ -29,8 +29,6 @@
 
 var gulp       = require('gulp');
 var browserify = require('browserify');
-var babelify   = require('babelify');
-var vueify     = require('vueify');
 var gulpif     = require('gulp-if');
 var rev        = require('gulp-rev');
 var sourcemaps = require('gulp-sourcemaps');
@@ -59,8 +57,6 @@ gulp.task('build:scripts', ['clean:scripts'], function()
                 detectGlobals: true,
                 noParse: false
             })
-            .transform(vueify)
-            .transform(babelify)
             .bundle()
 
             // Adding an error handler, for when the pipe breaks
