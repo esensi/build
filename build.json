@@ -10,7 +10,16 @@
             "./package.json",
             "./resources/scripts/**/*.js",
             "!./resources/scripts/common/_ga.js"
-        ]
+        ],
+        "babelify": {
+            "presets": [
+                "es2015",
+                "flow"
+            ],
+            "plugins": [
+                "syntax-flow"
+            ]
+        }
     },
     "styles": {
         "source": "./resources/styles/*.scss",
