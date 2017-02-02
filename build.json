@@ -13,11 +13,7 @@
         ],
         "babelify": {
             "presets": [
-                "es2015",
-                "flow"
-            ],
-            "plugins": [
-                "syntax-flow"
+                "es2015"
             ]
         }
     },
