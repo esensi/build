@@ -60,7 +60,7 @@ gulp.task('build:scripts', ['clean:scripts'], function()
                 noParse: false
             })
             .transform(vueify)
-            .transform(babelify, { presets: config.babelify.presets })
+            .transform(babelify, { presets: config.scripts.babelify.presets })
             .bundle()
 
             // Adding an error handler, for when the pipe breaks
