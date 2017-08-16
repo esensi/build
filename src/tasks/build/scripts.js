@@ -60,7 +60,7 @@ gulp.task('build:scripts', ['clean:scripts'], function()
                 noParse: false
             })
             .transform(vueify)
-            .transform(babelify)
+            .transform(babelify, { presets: config.scripts.babelify.presets })
             .bundle()
 
             // Adding an error handler, for when the pipe breaks
@@ -69,11 +69,11 @@ gulp.task('build:scripts', ['clean:scripts'], function()
             .on('error', function (err) {
                 console.log(err.message);
             })
-            
+
             .pipe(stream(name))
             .pipe(buffer())
             .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
-            .pipe(gulpif(global.is_production, uglify())) // Minify in production
+            .pipe(gulpif(global.is_production, uglify(config.uglify))) // Minify in production
 
             // Build without revision
             .pipe(gulpif(!global.is_production && !config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
