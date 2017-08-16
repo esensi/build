@@ -79,5 +79,6 @@
         ]
     },
     "vendor": "./node_modules/",
-    "revisions": true
+    "revisions": true,
+    "uglify": {}
 }
