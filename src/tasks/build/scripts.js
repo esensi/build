@@ -44,12 +44,14 @@ gulp.task('build:scripts', ['clean:scripts'], function()
 {
     var pipeline;
     var source = config.scripts.source;
-    var dest   = config.scripts.dest;
     glob(source, {}, function(err, files)
     {
         files.forEach(function(filename)
         {
             var name = filename.split('/');
+            var group = name[name.length - 2];
+            group = ['scripts', 'js'].indexOf(group) !== -1 ? '' : group + '/';
+            var dest  = config.scripts.dest + group;
             name = name[name.length - 1];
             pipeline = browserify(filename, {
                 debug: ! global.is_production,
@@ -65,7 +67,7 @@ gulp.task('build:scripts', ['clean:scripts'], function()
             .on('error', function (err) {
                 console.log(err.message);
             })
-            
+
             .pipe(stream(name))
             .pipe(buffer())
             .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
