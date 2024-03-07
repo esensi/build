@@ -27,69 +27,69 @@
 
 "use strict";
 
+var requireModule = require('../../utils/requireModule')
 var gulp       = require('gulp');
 var browserify = require('browserify');
 var babelify   = require('babelify');
 var vueify     = require('vueify');
 var gulpif     = require('gulp-if');
-var rev        = require('gulp-rev');
 var sourcemaps = require('gulp-sourcemaps');
 var stream     = require('vinyl-source-stream');
 var uglify     = require('gulp-uglify');
 var buffer     = require('vinyl-buffer');
-var glob       = require('glob');
+var { glob }  = require('glob');
 var config     = global.buildOptions;
 
 // Bundle source JS into minified destination JS files.
 // Cleans scripts first to prepare for build.
-gulp.task('build:scripts', ['clean:scripts'], function()
+module.exports = async function()
 {
+    const {default: rev} = await requireModule('gulp-rev')
+
     var pipeline;
     var source = config.scripts.source;
     var dest   = config.scripts.dest;
-    glob(source, {}, function(err, files)
+    let files = await glob(source);
+
+    files.forEach(function(filename)
     {
-        files.forEach(function(filename)
-        {
-            var name = filename.split('/');
-            name = name[name.length - 1];
-            pipeline = browserify(filename, {
-                debug: ! global.is_production,
-                insertGlobals: true,
-                detectGlobals: true,
-                noParse: false
-            })
-            .transform(vueify)
-            .transform(babelify, { presets: config.scripts.babelify.presets })
-            .bundle()
+        var name = filename.split('/');
+        name = name[name.length - 1];
+        pipeline = browserify(filename, {
+            debug: ! global.is_production,
+            insertGlobals: true,
+            detectGlobals: true,
+            noParse: false
+        })
+          .transform(vueify)
+          .transform(babelify, { presets: config.scripts.babelify?.presets })
+          .bundle()
 
-            // Adding an error handler, for when the pipe breaks
-            // According to: http://www.bennadel.com/blog/2692-you-have-to-explicitly-end-streams-after-pipes-break-in-node-js.htm
-            // the stream has to be ended, but it works without ending it
-            .on('error', function (err) {
-                console.log(err.message);
-            })
+          // Adding an error handler, for when the pipe breaks
+          // According to: http://www.bennadel.com/blog/2692-you-have-to-explicitly-end-streams-after-pipes-break-in-node-js.htm
+          // the stream has to be ended, but it works without ending it
+          .on('error', function (err) {
+              console.log(err.message);
+          })
 
-            .pipe(stream(name))
-            .pipe(buffer())
-            .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
-            .pipe(gulpif(global.is_production, uglify(config.uglify))) // Minify in production
+          .pipe(stream(name))
+          .pipe(buffer())
+          .pipe(gulpif(!global.is_production, sourcemaps.init({loadMaps: true}))) // load map from browserify file
+          .pipe(gulpif(global.is_production, uglify(config.uglify))) // Minify in production
 
-            // Build without revision
-            .pipe(gulpif(!global.is_production && !config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
-            .pipe(gulpif(!config.revisions, gulp.dest(dest)))
+          // Build without revision
+          .pipe(gulpif(!global.is_production && !config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
+          .pipe(gulpif(!config.revisions, gulp.dest(dest)))
 
-            // Build with revisions
-            .pipe(gulpif(config.revisions, rev()))
-            .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
-            .pipe(gulpif(config.revisions, gulp.dest(dest))) // write assets to build dir
+          // Build with revisions
+          .pipe(gulpif(config.revisions, rev()))
+          .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
+          .pipe(gulpif(config.revisions, gulp.dest(dest))) // write assets to build dir
 
-            // Build revisions manifest
-            .pipe(gulpif(config.revisions, rev.manifest( name.replace('.js', '.json') )))
-            .pipe(gulpif(config.revisions, gulp.dest(dest))); // write manifest to build dir
-        });
+          // Build revisions manifest
+          .pipe(gulpif(config.revisions, rev.manifest( name.replace('.js', '.json') )))
+          .pipe(gulpif(config.revisions, gulp.dest(dest))); // write manifest to build dir
     });
 
     return pipeline;
-
-});
+}

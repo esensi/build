@@ -25,19 +25,20 @@
 
 "use strict";
 
+var requireModule = require('../../utils/requireModule')
 var gulp     = require('gulp');
-var changed  = require('gulp-changed');
-var imagemin = require('gulp-imagemin');
 var gulpif   = require('gulp-if');
 var config   = global.buildOptions;
 
 // Copy fonts from source to destination
-gulp.task('build:images', function()
-{
+module.exports = async function() {
+    const {default: changed} = await requireModule('gulp-changed')
+    const {default: imagemin} = await requireModule('gulp-imagemin')
+
     var source = config.images.source;
-    var dest   = config.images.dest;
+    var dest = config.images.dest;
     return gulp.src(source)
-        .pipe(changed(dest)) // Ignore unchanged files
-        .pipe(gulpif(global.is_production, imagemin())) // Optimize for production
-        .pipe(gulp.dest(dest));
-});
+      .pipe(changed(dest)) // Ignore unchanged files
+      .pipe(gulpif(global.is_production, imagemin())) // Optimize for production
+      .pipe(gulp.dest(dest));
+}

@@ -17,5 +17,5 @@ var path = require('path');
 
 module.exports = function(name)
 {
-    return /(\.(css|scss|less)$)/i.test(path.extname(name));
+  return /(\.(css|scss|less)$)/i.test(path.extname(name));
 };

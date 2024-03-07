@@ -24,49 +24,43 @@
 
 "use strict";
 
+var requireModule = require('../utils/requireModule')
 var gulp   = require('gulp');
-var del    = require('del');
 var config = global.buildOptions;
 
 // Exclude certain files, and set up del config properly
-function cleaner(glob) {
+async function cleaner(glob) {
+    const {deleteSync: del} = await requireModule('del')
+
     glob = Array.isArray(glob) ?  glob : [glob];
     glob.push('!.gitignore');
     glob.push('!.gitkeep');
     del(glob);
 }
 
-// Alias build:clean to clean
-gulp.task('build:clean', ['clean']);
-
-// Run all clean subtasks
-gulp.task('clean', [
-    'clean:fonts',
-    'clean:images',
-    'clean:scripts',
-    'clean:styles'
-]);
-
 // Clean scripts subtask
-gulp.task('clean:scripts', function()
-{
+function cleanScripts() {
     return cleaner(config.scripts.dest + '**/*');
-});
+}
 
 // Clean styles subtask
-gulp.task("clean:styles", function()
-{
+function cleanStyles() {
     return cleaner(config.styles.dest + '**/*');
-});
+}
 
 // Clean fonts subtask
-gulp.task("clean:fonts", function()
-{
+function cleanFonts() {
     return cleaner(config.fonts.dest + '**/*');
-});
+}
 
 // Clean images subtask
-gulp.task("clean:images", function()
-{
+function cleanImages() {
     return cleaner(config.images.dest + '**/*');
-});
+}
+
+module.exports = {
+    cleanScripts,
+    cleanStyles,
+    cleanFonts,
+    cleanImages
+}

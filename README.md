@@ -39,14 +39,14 @@ This package has been tested against the following `npm version` output:
 
 ```js
 {
-  npm: '2.9.0',
+  npm: '10.2.4',
   http_parser: '2.3',
-  modules: '14',
-  node: '0.12.2',
-  openssl: '1.0.1m',
-  uv: '1.4.2-node1',
-  v8: '3.28.73',
-  zlib: '1.2.8'
+  modules: '115',
+  node: '20.11.1',
+  openssl: '3.0.13',
+  uv: '1.46.0',
+  v8: '11.3.244.8',
+  zlib: '1.2.13.1'
 }
 ```
 

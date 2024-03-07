@@ -33,10 +33,9 @@ var gulp    = require('gulp');
 var browser = require('browser-sync');
 
 // Sync build across browsers
-gulp.task('sync', ['build'], function()
-{
+module.exports = function () {
     // @todo abstract config and source directories
     browser.init(['build/**'], {
         proxy: "localhost:8000"
     });
-});
+}

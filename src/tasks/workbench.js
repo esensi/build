@@ -23,20 +23,17 @@
 
 var gulp       = require('gulp');
 var livereload = require('gulp-livereload');
-var watch      = require('gulp-watch');
-var sequence   = require('run-sequence');
 var config     = global.buildOptions;
 
 // Live reload site based on watch tasks
-gulp.task('workbench', function() {
+module.exports = function() {
 
     // Setup the initial watch tasks
-    sequence(config.workbench.init, function() {
+    gulp.series(config.workbench.init, function() {
+        livereload.listen();
 
         // Now watch the folders for changes to live reload
         var source = config.workbench.watch;
-        gulp.src(source)
-            .pipe(watch(source))
-            .pipe(livereload({start:true}));
+        gulp.watch(source).on('change', (path) => gulp.src(path).pipe(livereload()));
     });
-});
+}

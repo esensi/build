@@ -59,7 +59,7 @@
         "init": ["watch"]
     },
     "autoprefixerOpts": {
-        "browsers": [
+        "overrideBrowserslist": [
             "> 1%",
             "Android >= 4",
             "Blackberry >= 7",

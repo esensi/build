@@ -19,18 +19,20 @@
 
 "use strict";
 
+const requireModule = require("../../utils/requireModule");
 var gulp         = require('gulp');
-var autoprefixer = require('gulp-autoprefixer');
 var gulpif       = require('gulp-if');
 var less         = require('gulp-less');
-var sass         = require('gulp-sass');
-var rev          = require('gulp-rev');
+var sass         = require('gulp-sass')(require('sass'));
 var sourcemaps   = require('gulp-sourcemaps');
 var config       = global.buildOptions;
 
 // Compiles source pre-processor language files to destination CSS.
 // Cleans styles first to prepare for build.
-gulp.task('build:styles', ['clean:styles'], function () {
+module.exports = async function () {
+
+    const {default: rev} = await requireModule('gulp-rev')
+    const {default: autoprefixer} = await requireModule('gulp-autoprefixer')
 
     // Set up the commands that will be ran to compile the pre-processor language files
     var lessCommand = less({
@@ -43,37 +45,37 @@ gulp.task('build:styles', ['clean:styles'], function () {
 
     gulp.src(config.styles.source)
 
-        // In development, use sourcemaps. We must 'init' before processing
-        // begins, and 'write' after it's done. If you add more processing
-        // steps, make sure you check to make sure your plugin is supported:
-        // @link https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support
-        .pipe(gulpif(!global.is_production, sourcemaps.init()))
+      // In development, use sourcemaps. We must 'init' before processing
+      // begins, and 'write' after it's done. If you add more processing
+      // steps, make sure you check to make sure your plugin is supported:
+      // @link https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support
+      .pipe(gulpif(!global.is_production, sourcemaps.init()))
 
-        // Compile pre-processor language files and compress in production
-        .pipe(compile)
+      // Compile pre-processor language files and compress in production
+      .pipe(compile)
 
-        // Handle any pre-processor language files errors. This is hacky and one-off. We have a lot of
-        // issues with pre-processor language files errors being uncaught. Hopefully gulp 4 will bring
-        // comprehensive error handling and we can remove all this nonsense.
-        .on('error', function(err){ console.log(err.message); })
+      // Handle any pre-processor language files errors. This is hacky and one-off. We have a lot of
+      // issues with pre-processor language files errors being uncaught. Hopefully gulp 4 will bring
+      // comprehensive error handling and we can remove all this nonsense.
+      .on('error', function(err){ console.log(err.message); })
 
-        // Run autoprefixer: set browsers to target in the build.json file.
-        .pipe(autoprefixer(config.autoprefixerOpts))
+      // Run autoprefixer: set browsers to target in the build.json file.
+      .pipe(autoprefixer(config.autoprefixerOpts))
 
-        // Save original
-        .pipe(gulpif(!config.revisions, gulp.dest(config.styles.dest)))
+      // Save original
+      .pipe(gulpif(!config.revisions, gulp.dest(config.styles.dest)))
 
-        // Build with revisions
-        .pipe(gulpif(config.revisions, rev()))
-        .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
-        .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))) // Write the assets to the build dir
+      // Build with revisions
+      .pipe(gulpif(config.revisions, rev()))
+      .pipe(gulpif(!global.is_production && config.revisions, sourcemaps.write('.'))) // Write maps externally to same directory
+      .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))) // Write the assets to the build dir
 
-        // In development, use sourcemaps. The '.' writes maps externally to
-        // same directory. Default is internal write.
-        .pipe(gulpif(!global.is_production, sourcemaps.write('.')))
+      // In development, use sourcemaps. The '.' writes maps externally to
+      // same directory. Default is internal write.
+      .pipe(gulpif(!global.is_production, sourcemaps.write('.')))
 
-        // Build revisions manifest
-        .pipe(gulpif(config.revisions, rev.manifest('manifest.json')))
-        .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))); // write manifest to build dir
+      // Build revisions manifest
+      .pipe(gulpif(config.revisions, rev.manifest('manifest.json')))
+      .pipe(gulpif(config.revisions, gulp.dest(config.styles.dest))); // write manifest to build dir
 
-});
+};
