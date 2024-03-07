@@ -21,14 +21,13 @@ Email us at [sales@emersonmedia.com](https://www.emersonmedia.com/contact), or c
 
 Getting started with Esensi/Build is simple. Make sure your project has a `package.json`. If it does not, you can use `npm init` to help you make one. Then follow these steps:
 
-1. Add `gulp` to your project's `package.json`: `npm install --save-dev gulp`
-2. Add `esensi/build` to your `package.json`: `npm install --save-dev esensi-build`
-3. Add `browserify-shim` to your `package.json`: `npm install --save-dev browserify-shim`
-4. Copy `gulpfile.js` and `build.json` to your project root.
-5. _Optional:_ If you're deploying to S3:
+1. Add `esensi/build` to your `package.json`: `npm install --save-dev esensi-build`
+2. Add `browserify-shim` to your `package.json`: `npm install --save-dev browserify-shim`
+3. Copy `gulpfile.js` and `build.json` to your project root.
+4. _Optional:_ If you're deploying to S3:
     - Copy `aws-credentials.json` to your project root, and add your creds to it.
     - Add `aws-credentials.json` and `.awspublish-*` to your project's `.gitignore`.
-6. Customize `build.json` to fit your source and destination directory requirements.
+5. Customize `build.json` to fit your source and destination directory requirements.
 
 
 ## Requirements
