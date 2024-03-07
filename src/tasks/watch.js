@@ -36,47 +36,20 @@
 "use strict";
 
 var gulp     = require('gulp');
-var sequence = require('run-sequence');
-var watch    = require('gulp-watch');
 var config   = global.buildOptions;
-
-// Alias build:watch to watch
-gulp.task('build:watch', ['watch']);
 
 // Watch source directories for changes
 // and run appropriate build subtask.
-// Runs clean task first to prepare build.
-gulp.task('watch', ['clean'], function()
-{
-    // Run build at start then begins watching
-    gulp.start('build');
-
+module.exports = function() {
     // Watch scripts
-    watch(config.scripts.watch, {'name': 'scripts'}, function()
-    {
-        // Scripts run clean:scripts before building
-        gulp.start('build:scripts');
-    });
+    gulp.watch(config.scripts.watch, gulp.series('build:scripts'));
 
     // Watch styles
-    watch(config.styles.watch, {'name': 'styles'}, function()
-    {
-        // Styles run clean:styles before building
-        gulp.start('build:styles');
-    });
+    gulp.watch(config.styles.watch, gulp.series('build:styles'));
 
     // Watch images
-    watch(config.images.watch, {'name': 'images'}, function()
-    {
-        // Use sequence to ensure synchronicity
-        sequence(['clean:images', 'build:images']);
-    });
+    gulp.watch(config.images.watch, gulp.series('clean:images', 'build:images'));
 
     // Watch fonts
-    watch(config.fonts.watch, {'name': 'fonts'}, function()
-    {
-        // Use sequence to ensure synchronicity
-        sequence(['clean:fonts', 'build:fonts']);
-    });
-
-});
+    gulp.watch(config.fonts.watch, gulp.series('clean:fonts', 'build:fonts'));
+}

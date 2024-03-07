@@ -23,34 +23,10 @@ var gulp        = require('gulp');
 var gutil       = require('gulp-util');
 var rsync       = require('gulp-rsync');
 var awspublish  = require('gulp-awspublish');
-var sequence    = require('run-sequence');
 var config      = global.buildOptions;
 var awsCreds    = global.awsCredentials;
 var deploy      = config.deployment;
 var connections = deploy.connections;
-
-// Run all deploy subtasks with production optimizations
-gulp.task('deploy', function()
-{
-    // Get the original production state to reset when we're done
-    var original = global.is_production;
-    global.is_production = true;
-
-    // Get all the environments we need to deploy to
-    // Add them to the sequence of tasks to run
-    var tasks = [];
-    for(var environment in connections)
-    {
-        // Add the deploy task for the given environment
-        tasks.push('deploy:' + environment);
-    }
-
-    // Now run the tasks in sequence
-    // Add the callback that resets the production state when we're done
-    sequence(tasks, function() {
-        global.is_production = original;
-    });
-});
 
 // Deploy with rsync
 var deployWithRsync = function(connection){
@@ -138,12 +114,13 @@ var deployToS3 = function(connection){
 // Create gulp deploy subtasks for each environment.
 // Uses rsync to deploy source files to remote server via SSH,
 // or gulp-awspublish to deploy to S3.
-for(var environment in connections)
-{
+
+const fns = {}
+
+for(var environment in connections) {
     (function(environment)
     {
-        gulp.task('deploy:' + environment, function()
-        {
+        fns[environment] = async function() {
 
             var connection = connections[environment];
 
@@ -156,6 +133,8 @@ for(var environment in connections)
                 return deployWithRsync(connection);
             }
 
-        });
+        }
     })(environment);
 }
+
+module.exports = fns

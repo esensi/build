@@ -23,16 +23,17 @@
 
 "use strict";
 
+var requireModule = require('../../utils/requireModule')
 var gulp    = require('gulp');
-var changed = require('gulp-changed');
 var config  = global.buildOptions;
 
 // Copy fonts from source to destination
-gulp.task('build:fonts', function()
-{
+module.exports = async function() {
+    const {default: changed} = await requireModule('gulp-changed')
+
     var source = config.fonts.source;
-    var dest   = config.fonts.dest;
+    var dest = config.fonts.dest;
     return gulp.src(source)
-        .pipe(changed(dest)) // Ignore unchanged files
-        .pipe(gulp.dest(dest));
-});
+      .pipe(changed(dest)) // Ignore unchanged files
+      .pipe(gulp.dest(dest));
+}

@@ -19,21 +19,11 @@
 
 "use strict";
 
-var gulp    = require('gulp');
 var gutil   = require('gulp-util');
 var process = require('child_process');
 
-// Alias build:jekyll to jekyll
-gulp.task('build:jekyll', ['jekyll']);
-
-// Run all jekyll subtasks
-gulp.task('jekyll', [
-    'jekyll:build'
-]);
-
 // Build jekyll templates.
-gulp.task('jekyll:build', function(callback)
-{
+function jekyllBuild(callback) {
     // Run `jekyll build` in a child process
     // Uses the `--lsi` flag to improve related blog posts
     process.exec('jekyll build --lsi', function(err, stdout, stderr)
@@ -41,13 +31,9 @@ gulp.task('jekyll:build', function(callback)
         gutil.log(stdout);
         callback(err);
     });
-});
+}
 
-// Alias jekyll:serve to jekyll:watch
-gulp.task('jekyll:serve', ['jekyll:watch']);
-
-// Serve jekyll templates.
-gulp.task('jekyll:watch', function() {
+function jekyllWatch(callback) {
 
     // Run `jekyll serve --watch` in a child process
     process.exec('jekyll serve --watch', function(err, stdout, stderr)
@@ -55,4 +41,11 @@ gulp.task('jekyll:watch', function() {
         gutil.log(stdout);
         callback(err);
     });
-});
+}
+
+module.exports = {
+    jekyllBuild,
+    jekyllWatch
+}
+
+

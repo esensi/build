@@ -25,18 +25,12 @@ var gulp   = require('gulp');
 var jshint = require('gulp-jshint');
 var config = global.configOpts;
 
-// Alias build:lint to lint
-gulp.task('build:lint', ['lint']);
+module.exports = function() {
 
-// Run all lint subtasks
-gulp.task('lint', [
-    'lint:scripts'
-]);
+    console.log(config.scripts)
 
-// Lint scripts subtask
-gulp.task('lint:scripts', function()
-{
+    return
     return gulp.src(config.scripts.lint)
-        .pipe(jshint({lookup: true}))
-        .pipe(jshint.reporter('default'));
-});
+      .pipe(jshint({lookup: true}))
+      .pipe(jshint.reporter('default'));
+}
