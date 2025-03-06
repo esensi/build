@@ -14,8 +14,6 @@
   },
   "main": "index.js",
   "dependencies": {
-    "esm": "^3.2.25",
-    "gulp": "^4.0.2",
     "argh": "^1.0.0",
     "babel-preset-env": "^1.7.0",
     "babelify": "^10.0.0",
@@ -24,7 +22,9 @@
     "browserify": "^17.0.0",
     "browserify-shim": "~3.8.12",
     "del": "^7.1.0",
+    "esm": "^3.2.25",
     "glob": "^10.3.10",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-awspublish": "^8.0.0",
     "gulp-changed": "^5.0.2",
@@ -36,15 +36,15 @@
     "gulp-rev": "^11.0.0",
     "gulp-rsync": "^0.1.0",
     "gulp-sass": "^5.1.0",
-    "sass": "^1.71.1",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-task-listing": "^1.1.1",
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
     "remove": "^0.1.5",
+    "sass": "^1.71.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
-    "vueify": "^7.0.36"
+    "vueify": "^9.4.1"
   },
   "engines": {
     "node": ">=20"
