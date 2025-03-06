@@ -23,7 +23,7 @@
     "del": "^7.1.0",
     "esm": "^3.2.25",
     "glob": "^10.3.10",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-awspublish": "^8.0.0",
     "gulp-changed": "^5.0.2",
