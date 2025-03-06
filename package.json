@@ -14,6 +14,7 @@
   },
   "main": "index.js",
   "overrides": {
+      "cross-spawn@5.1.0": "^6.0.0",
       "cssnano": "^4.0.0"
   },
   "dependencies": {
