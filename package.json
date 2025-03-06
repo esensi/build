@@ -14,14 +14,13 @@
   },
   "main": "index.js",
   "overrides": {
-      "cross-spawn@5.1.0": "^6.0.0",
-      "cssnano": "^4.0.0"
+    "cross-spawn@5.1.0": "^6.0.0",
+    "cssnano": "^4.0.0"
   },
   "dependencies": {
     "@babel/preset-env": "^7.26.9",
     "argh": "^1.0.0",
     "babelify": "^10.0.0",
-    "browser-sync": "^3.0.2",
     "browserify": "^17.0.0",
     "browserify-shim": "~3.8.12",
     "del": "^7.1.0",
