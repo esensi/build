@@ -31,7 +31,6 @@ var requireModule = require('../../utils/requireModule')
 var gulp       = require('gulp');
 var browserify = require('browserify');
 var babelify   = require('babelify');
-var vueify     = require('vueify');
 var gulpif     = require('gulp-if');
 var sourcemaps = require('gulp-sourcemaps');
 var stream     = require('vinyl-source-stream');
@@ -61,7 +60,6 @@ module.exports = async function()
             detectGlobals: true,
             noParse: false
         })
-          .transform(vueify)
           .transform(babelify, { presets: config.scripts.babelify?.presets })
           .bundle()
 
