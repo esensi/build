@@ -20,7 +20,8 @@
 "use strict";
 
 var gulp        = require('gulp');
-var gutil       = require('gulp-util');
+var colors       = require('ansi-colors');
+var log       = require('fancy-log');
 var rsync       = require('gulp-rsync');
 var awspublish  = require('gulp-awspublish');
 var config      = global.buildOptions;
@@ -79,8 +80,8 @@ var deployToS3 = function(connection){
         }
         // ... otherwise error out.
         else {
-            gutil.log(
-                gutil.colors.bgRed("Error!"),
+            log(
+                colors.bgRed("Error!"),
                 "deploy.source is an array and S3 deployment doesn't support arrays. Make deploy.source a single-value array or string and try again!"
             );
             return false;
@@ -90,8 +91,8 @@ var deployToS3 = function(connection){
     // gulp-awspublish also won't work with a source like `./public`, it wants
     // `./public/**`. So, check for this, and display a message.
     if( deploy.source.substring(0,2) === './' && deploy.source.substring(deploy.source.length-3) !== '/**' ) {
-        gutil.log(
-            gutil.colors.yellow("Heads up!"),
+        log(
+            colors.yellow("Heads up!"),
             "You're trying to deploy '" + deploy.source + "'. If you're trying to deploy an entire directory to S3, you need to end your source with '/**'. (If you're not trying to deploy a directory, ignore this and carry on.)"
         );
     }

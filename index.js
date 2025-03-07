@@ -46,7 +46,6 @@ const {
 } = require('./src/tasks/jekyll')
 const deployFns = require('./src/tasks/deploy')
 const lint = require('./src/tasks/lint')
-const browserSync = require('./src/tasks/sync')
 const watch = require('./src/tasks/watch')
 const workbench = require('./src/tasks/workbench')
 
@@ -95,9 +94,6 @@ gulp.task('lint', gulp.series(
 ));
 // Alias build:lint to lint
 gulp.task('build:lint', gulp.series('lint'));
-
-/** Sync tasks */
-gulp.task('sync', gulp.series('build', browserSync));
 
 /** Watch tasks */
 gulp.task('watch', gulp.series('clean', 'build', watch));

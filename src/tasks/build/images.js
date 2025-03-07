@@ -33,12 +33,10 @@ var config   = global.buildOptions;
 // Copy fonts from source to destination
 module.exports = async function() {
     const {default: changed} = await requireModule('gulp-changed')
-    const {default: imagemin} = await requireModule('gulp-imagemin')
 
     var source = config.images.source;
     var dest = config.images.dest;
     return gulp.src(source)
       .pipe(changed(dest)) // Ignore unchanged files
-      .pipe(gulpif(global.is_production, imagemin())) // Optimize for production
       .pipe(gulp.dest(dest));
 }
