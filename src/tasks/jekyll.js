@@ -19,7 +19,7 @@
 
 "use strict";
 
-var gutil   = require('gulp-util');
+var log   = require('fancy-log');
 var process = require('child_process');
 
 // Build jekyll templates.
@@ -28,7 +28,7 @@ function jekyllBuild(callback) {
     // Uses the `--lsi` flag to improve related blog posts
     process.exec('jekyll build --lsi', function(err, stdout, stderr)
     {
-        gutil.log(stdout);
+        log(stdout);
         callback(err);
     });
 }
@@ -38,7 +38,7 @@ function jekyllWatch(callback) {
     // Run `jekyll serve --watch` in a child process
     process.exec('jekyll serve --watch', function(err, stdout, stderr)
     {
-        gutil.log(stdout);
+        log(stdout);
         callback(err);
     });
 }
