@@ -36,7 +36,12 @@ module.exports = async function() {
 
     var source = config.images.source;
     var dest = config.images.dest;
-    return gulp.src(source)
+    return gulp.src(
+      source,
+      {
+        encoding: false,
+      },
+    )
       .pipe(changed(dest)) // Ignore unchanged files
       .pipe(gulp.dest(dest));
 }

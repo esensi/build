@@ -33,7 +33,12 @@ module.exports = async function() {
 
     var source = config.fonts.source;
     var dest = config.fonts.dest;
-    return gulp.src(source)
+    return gulp.src(
+      source,
+      {
+        encoding: false,
+      },
+    )
       .pipe(changed(dest)) // Ignore unchanged files
       .pipe(gulp.dest(dest));
 }
